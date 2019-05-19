@@ -15,19 +15,26 @@ import java.util.logging.Logger;
 
 
 public class MultiThreadServer {
-
     final static Logger LOG = Logger.getLogger(MultiThreadServer.class.getName());
 
     int port;
     int maxClients;
 
-
+    /**
+     * Constructor taking an ip address and a port to start
+     * a multi-threaded server for the game.
+     *
+     * @param port the port for the server
+     * @param maxClients the maximum amount of players
+     */
     public MultiThreadServer(int port, int maxClients) {
         this.maxClients = maxClients;
         this.port = port;
     }
 
-
+    /**
+     * Starts a new Thread for the reception of potential players.
+     */
     public void serveClients() {
         LOG.info("Starting the Receptionist Worker on a new thread...");
         new Thread(new ReceptionistWorker()).start();
@@ -35,7 +42,12 @@ public class MultiThreadServer {
 
 
     private class ReceptionistWorker implements Runnable {
-
+        /**
+         * A receptionist for all the potential players it does the following:
+         * Opens a server socket on a given port.
+         * Wait for a player to request a connexion and delegates the conversation
+         * to a child-thread.
+         */
         @Override
         public void run() {
             ServerSocket serverSocket;
@@ -71,12 +83,23 @@ public class MultiThreadServer {
 
         }
 
+        /**
+         * A ServantWorker is a thread delegated to serve a player and listen
+         * to his queries and transmit it to the Game state.
+         */
         private class ServantWorker implements Runnable {
             int id;
             Socket clientSocket;
             BufferedReader in = null;
             PrintWriter out = null;
 
+            /**
+             * A ServantWorker constructor taking a players Socket and his id
+             * to start communicating on said socket.
+             *
+             * @param clientSocket the socket associated to the player
+             * @param id the players unique id
+             */
             public ServantWorker(Socket clientSocket, int id) {
                 this.id = id;
                 try {
@@ -88,6 +111,9 @@ public class MultiThreadServer {
                 }
             }
 
+            /**
+             * Continuously waits for a query, parses it and transmits it to the Game
+             */
             @Override
             public void run() {
                 String line;
