@@ -1,5 +1,6 @@
 package common;
 import common.spells.ElementalOrb;
+import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
@@ -8,7 +9,6 @@ import common.spells.AttackSpell;
 import common.spells.ShieldSpell;
 import org.newdawn.slick.geom.Rectangle;
 
-import java.awt.*;
 import java.util.*;
 
 /**
