@@ -15,8 +15,15 @@ public class LogIn extends BasicGameState {
     private Image qrCode, start;
     static private int nbPlayers = 0;
 
+    /**
+     * Initialise the state. It loads the resources
+     *
+     * @param gameContainer The container holding the game
+     * @param stateBasedGame The game holding this state
+     * @throws SlickException Indicates a failure to initialise a resource
+     */
     @Override
-    public void init(GameContainer arg0, StateBasedGame arg1) throws SlickException {
+    public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
         try {
             QRCodeGenerator.generateQRCodeImageWithIPsAndPort(600, 600);
         }
@@ -27,34 +34,64 @@ public class LogIn extends BasicGameState {
         start = new Image("img/Start.png");
     }
 
+    /**
+     * Render this state to the game's graphics context.
+     * Renders the QrCode, the number of players currently connected
+     * and a button to start a game.
+     *
+     * @param gameContainer The container holding the game
+     * @param stateBasedGame The game holding this state
+     * @param graphics The graphics context to render to
+     * @throws SlickException Indicates a failure to render an artifact
+     */
     @Override
-    public void render(GameContainer arg0, StateBasedGame arg1, Graphics g) {
-        g.drawString("Connexion", arg0.getWidth() / 2 - 50, 50);
-        qrCode.draw(arg0.getWidth() / 2 - 300, 75);
-        start.draw(arg0.getWidth() / 2 - 50, 685);
-        g.drawString("Players connected : " + nbPlayers + "/4",
-                arg0.getWidth() / 2 - 100, 740);
+    public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
+        graphics.drawString("Connexion", gameContainer.getWidth() / 2 - 50, 50);
+        qrCode.draw(gameContainer.getWidth() / 2 - 300, 75);
+        start.draw(gameContainer.getWidth() / 2 - 50, 685);
+        graphics.drawString("Players connected : " + nbPlayers + "/4",
+                gameContainer.getWidth() / 2 - 100, 740);
     }
 
+    /**
+     * Update the state's logic based on the amount of time that has passed.
+     * In this case, we're looking for user's clicks for the button.
+     *
+     * @param gameContainer The container holding the game
+     * @param stateBasedGame The game holding this state
+     * @param i The amount of time that has passed in millisecond since last update
+     * @throws SlickException Indicates an internal error
+     */
     @Override
-    public void update(GameContainer gc, StateBasedGame arg1, int arg2) throws SlickException {
+    public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
         int x = Mouse.getX();
-        int y = gc.getHeight() - Mouse.getY();
+        int y = gameContainer.getHeight() - Mouse.getY();
 
         // Start button is pressed
-        if((x > gc.getWidth() / 2 - 50 && x < gc.getWidth() / 2 + 50) && (y > 700 && y < 750)) {
+        if((x > gameContainer.getWidth() / 2 - 50 && x < gameContainer.getWidth() / 2 + 50)
+                && (y > 700 && y < 750)) {
             if(Mouse.isButtonDown(0)) {
-                arg1.getState(1).init(gc, arg1);
-                arg1.enterState(1);
+                stateBasedGame.getState(1).init(gameContainer, stateBasedGame);
+                stateBasedGame.enterState(1);
             }
         }
     }
 
+    /**
+     * Get the ID of this login state
+     *
+     * @return The game unique ID of this login state
+     */
     @Override
     public int getID() {
         return 3;
     }
 
+    /**
+     * Setter for the number of players
+     *
+     * @param nb new value for the number of players
+     */
     static public void setNbPlayers(int nb) {
         nbPlayers = nb;
     }

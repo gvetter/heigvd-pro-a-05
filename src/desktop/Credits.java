@@ -38,7 +38,7 @@ public class Credits extends BasicGameState {
      *
      * @param gameContainer The container holding the game
      * @param stateBasedGame The game holding this state
-     * @param graphics
+     * @param graphics The graphics context to render to
      * @throws SlickException Indicates a failure to render an artifact
      */
     @Override
@@ -57,7 +57,7 @@ public class Credits extends BasicGameState {
 
     /**
      * Update the state's logic based on the amount of time that has passed.
-     * In this case, we're looking for user's clicks.
+     * In this case, we're looking for user's clicks fot the button.
      *
      * @param gameContainer The container holding the game
      * @param stateBasedGame The game holding this state
