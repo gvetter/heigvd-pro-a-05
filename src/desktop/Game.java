@@ -109,6 +109,11 @@ public class Game extends BasicGameState {
 		}
 	}
 
+	/**
+	 * Get the ID of this game state
+	 *
+	 * @return The game unique ID of this game state
+	 */
 	@Override
 	public int getID() {
 		// TODO Auto-generated method stub
