@@ -45,6 +45,10 @@ public class Wizard {
         }
     }
 
+    public boolean isDead(){
+        return isDead;
+    }
+
     /**
      * Setter for the id
      * @param i the new id of the wizard.
@@ -179,38 +183,6 @@ public class Wizard {
      */
     public int getY() {
     	return y;
-    }
-    
-    /**
-     * Getter for the health points
-     * @return the current number of health points
-     */
-    public int getHealthPoint() {
-        return healthPoint;
-    }
-
-    /**
-     * Setter for the health points
-     * @param healthPoint the new value of the health points
-     */
-    public void setHealthPoint(int healthPoint) {
-        this.healthPoint = healthPoint;
-    }
-
-    /**
-     * Getter for the boolean is dead
-     * @return if the wizard is dead or not
-     */
-    public boolean isDead() {
-        return isDead;
-    }
-
-    /**
-     * Setter for the boolean is dead
-     * @param dead new value of the boolean is dead.
-     */
-    public void setDead(boolean dead) {
-        isDead = dead;
     }
 
     /**

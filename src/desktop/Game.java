@@ -2,13 +2,18 @@ package desktop;
 
 import java.util.LinkedList;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import common.spells.*;
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
+import org.newdawn.slick.state.transition.FadeInTransition;
+import org.newdawn.slick.state.transition.FadeOutTransition;
 import org.newdawn.slick.tiled.TiledMap;
 
 import common.Wizard;
@@ -24,6 +29,7 @@ public class Game extends BasicGameState {
 	private static String[] args = new String[3];
 	private static boolean changed;
 	private static int id;
+	private Wizard winner = null;
 
 	@Override
 	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
@@ -38,8 +44,8 @@ public class Game extends BasicGameState {
 		elementalOrbstoRemove = new LinkedList<>();
 	    wizards.add(new Wizard(135, 245));
 	    wizards.add(new Wizard(489, 245));
-	    wizards.add(new Wizard(312, 68));
-	    wizards.add(new Wizard(312, 422));
+	    //wizards.add(new Wizard(312, 68));
+	    //wizards.add(new Wizard(312, 422));
 		setId();
 	}
 
@@ -53,59 +59,92 @@ public class Game extends BasicGameState {
 
 	@Override
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
-		g.scale(2, 2);
-		map.render(0, 0);
-		for(Wizard wizard : wizards) {
-			wizard.render(g);
-		}
-		for(AttackSpell as : attackSpells) {
-			as.render(g);
-		}
-		for(ElementalOrb orb : elementalOrbs){
-			orb.render(g);
+		if(winner!=null){
+			g.clear();
+			g.setColor(Color.white);
+			g.drawString("Wizard number " + winner.getId() + " won!",gc.getWidth()/2 - 100, gc.getHeight()/2 -10);
+
+		} else {
+			g.scale(2, 2);
+			map.render(0, 0);
+			for (Wizard wizard : wizards) {
+				wizard.render(g);
+			}
+			for (AttackSpell as : attackSpells) {
+				as.render(g);
+			}
+			for (ElementalOrb orb : elementalOrbs) {
+				orb.render(g);
+			}
 		}
 
+	}
+
+	public Wizard checkWinner(){
+		int winnerIndex = 0;
+		int nbAlive = 0;
+		for(int i = 0; i < wizards.size(); i++){
+			if(!wizards.get(i).isDead()){
+				nbAlive++;
+				winnerIndex = i;
+			}
+		}
+		if(nbAlive == 1){
+			return wizards.get(winnerIndex);
+		}
+		return null;
 	}
 
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int a) throws SlickException {
 		remove();
-		checkUpdate();
-		for(AttackSpell as : attackSpells) {
-			as.move();
-			for(Wizard wizard : wizards) {
-				if(wizard.checkCollision(as)) {
-					wizard.getHit(as);
-					if(!as.isBounce()) {
-						attackSpellstoRemove.add(as);
-						if (wizard.getOrbs().size() != 0) {
-							for (int i = 0; i < wizard.getOrbs().size(); i++) {
-								elementalOrbstoRemove.add(wizard.getOrbs().get(i));
+		winner = checkWinner();
+		if(winner==null) {
+			checkUpdate();
+			for (AttackSpell as : attackSpells) {
+				as.move();
+				for (Wizard wizard : wizards) {
+					if (wizard.checkCollision(as)) {
+						wizard.getHit(as);
+						if (!as.isBounce()) {
+							attackSpellstoRemove.add(as);
+							if (wizard.getOrbs().size() != 0) {
+								for (int i = 0; i < wizard.getOrbs().size(); i++) {
+									elementalOrbstoRemove.add(wizard.getOrbs().get(i));
+								}
+								wizard.getOrbs().clear();
 							}
-							wizard.getOrbs().clear();
 						}
 					}
 				}
+				if (as.isOver())
+					attackSpellstoRemove.add(as);
 			}
-			if(as.isOver())
-				attackSpellstoRemove.add(as);
-		}
 
-		for(ShieldSpell sp : shieldSpells){
-			if(sp.isOver()){
-				shieldSpellstoRemove.add(sp);
-			}
-		}
-		
-		for(Wizard wizard : wizards) {
-
-			for(ElementalOrb orb : wizard.getOrbs()){
-				orb.move();
-				if(orb.isCast()){
-					throwAttack(orb.getTarget(), wizard);
+			for (ShieldSpell sp : shieldSpells) {
+				if (sp.isOver()) {
+					shieldSpellstoRemove.add(sp);
 				}
 			}
-			wizard.getOrbs().removeAll(elementalOrbstoRemove);
+
+			for (Wizard wizard : wizards) {
+
+				for (ElementalOrb orb : wizard.getOrbs()) {
+					orb.move();
+					if (orb.isCast()) {
+						throwAttack(orb.getTarget(), wizard);
+					}
+				}
+				wizard.getOrbs().removeAll(elementalOrbstoRemove);
+			}
+		} else {
+			Timer timer = new Timer();
+			timer.schedule(new TimerTask() {
+				@Override
+				public void run() {
+					sbg.enterState(0, new FadeOutTransition(org.newdawn.slick.Color.black), new FadeInTransition(org.newdawn.slick.Color.black));
+				}
+			}, 2000);
 		}
 	}
 

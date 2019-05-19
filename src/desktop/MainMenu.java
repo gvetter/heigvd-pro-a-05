@@ -7,6 +7,8 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
+import org.newdawn.slick.state.transition.FadeInTransition;
+import org.newdawn.slick.state.transition.FadeOutTransition;
 
 public class MainMenu extends BasicGameState {
 	private Image startGame, exit, credits;
@@ -34,7 +36,7 @@ public class MainMenu extends BasicGameState {
 		//startGame button pressed
 		if((x > gc.getWidth() / 2 - 50 && x < gc.getWidth() / 2 + 50) && (y > 100 && y < 150)) {
 			if(Mouse.isButtonDown(0)) {
-				arg1.enterState(3);
+				arg1.enterState(3, new FadeOutTransition(org.newdawn.slick.Color.black), new FadeInTransition(org.newdawn.slick.Color.black));
 			}
 		}
 		
