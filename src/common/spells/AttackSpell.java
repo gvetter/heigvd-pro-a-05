@@ -8,6 +8,9 @@ import org.newdawn.slick.SlickException;
 
 import common.Wizard;
 
+/**
+ * Define an offensive spell
+ */
 public class AttackSpell extends Spell implements Movable{
     private Vector direction;
 	private Wizard target;
@@ -15,6 +18,7 @@ public class AttackSpell extends Spell implements Movable{
 	private double x, y;
 	private Image sprite;
 	private boolean bounce = false;
+
     /**
      * Constructor taking an orb as parameter, and a target
      * @param orb the magic orb used to build the spell
@@ -53,14 +57,25 @@ public class AttackSpell extends Spell implements Movable{
         g.drawImage(sprite, (int)x - 8, (int)y - 8);
     }
 
+    /**
+     * Setter for bounce
+     * @param b
+     */
     public void setBounce(boolean b){
         bounce = b;
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isBounce() {
         return bounce;
     }
 
+    /**
+     *
+     */
     public void bounce(){
         direction = new Vector(this.target.getX(), this.getCaster().getX(), this.target.getY(), this.getCaster().getY());
         Wizard temp = this.target;
@@ -69,24 +84,24 @@ public class AttackSpell extends Spell implements Movable{
     }
 
     /**
-     * Getter of the target
-     * @return the wizard targeted by the spell.
+     * Getter for the target
+     * @return Wizard, the wizard targeted by the spell.
      */
     public Wizard getTarget(){
         return target;
     }
 
     /**
-     * Getter of the x coordinate
-     * @return the x coordinate of the spell's position
+     * Getter for the x coordinate
+     * @return double, the x coordinate of the spell's position
      */
     public double getX() {
         return x;
     }
 
     /**
-     * Getter of the y coordinate
-     * @return the y coordinate of the spell's position
+     * Getter for the y coordinate
+     * @return double, the y coordinate of the spell's position
      */
     public double getY() {
         return y;

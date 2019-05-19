@@ -2,6 +2,9 @@ package common.spells;
 
 import common.Wizard;
 
+/**
+ * Abstract class to define spells
+ */
 public abstract class Spell {
     private Quality quality;
     private MagicType type;
@@ -18,33 +21,49 @@ public abstract class Spell {
         this.caster = orb.getCaster();
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isOver(){
         return over;
     }
 
+    /**
+     * Setter for over
+     * @param b
+     */
     public void setOver(boolean b){
         over = b;
     }
 
+    /**
+     * Return the spell's caster
+     * @return Wizard who casted the spell
+     */
     public Wizard getCaster(){
         return caster;
     }
 
+    /**
+     * Set the spell's caster
+     * @param wizard Wizard who casted the spell
+     */
     public void setCaster(Wizard wizard){
         caster = wizard;
     }
 
     /**
-     * Method used to compute the power of the spell depending of it's the quality
-     * @return the value of the power of the spell
+     * Method used to compute the power of the spell depending of its quality
+     * @return int, the power of the spell
      */
     public int computePower(){
         return quality.computePower();
     }
 
     /**
-     * Getter of the type
-     * @return the type of the spell.
+     * Getter for the spell's element
+     * @return MagicType, element of the spell.
      */
     public MagicType getType() {
         return type;

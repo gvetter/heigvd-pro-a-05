@@ -9,7 +9,6 @@ import common.spells.AttackSpell;
 import common.spells.ShieldSpell;
 import org.newdawn.slick.geom.Rectangle;
 
-import java.awt.*;
 import java.util.*;
 
 /**
@@ -25,7 +24,7 @@ public class Wizard {
     private LinkedList<ElementalOrb> orbs = new LinkedList<>();
 
     /**
-     * Constructor by default;
+     * Default constructor
      */
     public Wizard() {
     	this(0, 0);
@@ -47,7 +46,7 @@ public class Wizard {
     }
 
     /**
-     * Setter of the id
+     * Setter for the id
      * @param i the new id of the wizard.
      */
     public void setId(int i){
@@ -55,8 +54,8 @@ public class Wizard {
     }
 
     /**
-     * Getter of the orbs
-     * @return the orbs
+     * Getter for the orbs
+     * @return list of the orbs
      */
     public LinkedList<ElementalOrb> getOrbs() {
         return orbs;
@@ -65,7 +64,7 @@ public class Wizard {
     /**
      * Method used to add an orb. A Wizard cannot have more than 4 orbs.
      * @param orb the new orb we want to add
-     * @return a boolean that indicate if the adding was successfull.
+     * @return a boolean that indicate if the adding was successful.
      */
     public boolean addOrb(ElementalOrb orb) {
         if(!isDead) {
@@ -87,8 +86,8 @@ public class Wizard {
 
 
     /**
-     * Getter of the shields
-     * @return the shields the wizard possesses.
+     * Getter for the shields
+     * @return list of the shields the wizard possesses.
      */
     public LinkedList<ShieldSpell> getShield(){
         return shield;
@@ -103,7 +102,7 @@ public class Wizard {
     }
 
     /**
-     * Method used to check wether a spell has hit the wizard or not
+     * Method used to check whether a spell has hit the wizard or not
      * @param spell the incoming spell
      * @return a boolean telling if the spell has hit or not.
      */
@@ -167,7 +166,7 @@ public class Wizard {
     }
 
     /**
-     * Getter of the x coordinate of the wizard
+     * Getter for the x coordinate of the wizard
      * @return the x coordinate
      */
     public int getX() {
@@ -175,7 +174,7 @@ public class Wizard {
     }
 
     /**
-     * Getter of the y coordinate of the wizard.
+     * Getter for the y coordinate of the wizard.
      * @return the y coordinate
      */
     public int getY() {
@@ -183,7 +182,7 @@ public class Wizard {
     }
     
     /**
-     * Getter of the health points
+     * Getter for the health points
      * @return the current number of health points
      */
     public int getHealthPoint() {
@@ -191,7 +190,7 @@ public class Wizard {
     }
 
     /**
-     * Setter of the health points
+     * Setter for the health points
      * @param healthPoint the new value of the health points
      */
     public void setHealthPoint(int healthPoint) {
@@ -199,7 +198,7 @@ public class Wizard {
     }
 
     /**
-     * Getter of the boolean is dead
+     * Getter for the boolean is dead
      * @return if the wizard is dead or not
      */
     public boolean isDead() {
@@ -207,7 +206,7 @@ public class Wizard {
     }
 
     /**
-     * Setter of the boolean is dead
+     * Setter for the boolean is dead
      * @param dead new value of the boolean is dead.
      */
     public void setDead(boolean dead) {
@@ -215,7 +214,7 @@ public class Wizard {
     }
 
     /**
-     * Getter of the id
+     * Getter for the id
      * @return the id
      */
     public int getId() {
