@@ -17,7 +17,7 @@ import util.Vector;
 public class Game extends BasicGameState {
 	private GameContainer container;
 	private TiledMap map;
-	private LinkedList<Wizard> wizards, wizardsToRemove;
+	private LinkedList<Wizard> wizards;
 	private LinkedList<AttackSpell> attackSpells, attackSpellstoRemove;
 	private LinkedList<ShieldSpell> shieldSpells, shieldSpellstoRemove;
 	private LinkedList<ElementalOrb> elementalOrbs, elementalOrbstoRemove;
@@ -30,7 +30,6 @@ public class Game extends BasicGameState {
 		container = gc;
 	    map = new TiledMap("img/tiles/map1.tmx");
 	    wizards = new LinkedList<>();
-	    wizardsToRemove = new LinkedList<>();
 	    attackSpellstoRemove = new LinkedList<>();
 	    shieldSpellstoRemove = new LinkedList<>();
 	    shieldSpells = new LinkedList<>();
@@ -99,9 +98,6 @@ public class Game extends BasicGameState {
 		}
 		
 		for(Wizard wizard : wizards) {
-			// A enlever à tout pris
-			if(wizard.isDead())
-				wizardsToRemove.add(wizard);
 
 			for(ElementalOrb orb : wizard.getOrbs()){
 				orb.move();
@@ -193,7 +189,7 @@ public class Game extends BasicGameState {
 		double minAngle = 10;
 		for(Wizard target : wizards){
 			if(target != caster) {
-				double angle = v.getAngle(new Vector(caster.getX(), target.getX(), caster.getY(), target.getY()));
+				double angle = Math.abs(v.getAngle(new Vector(caster.getX(), target.getX(), caster.getY(), target.getY())));
 				if (angle < minAngle && angle < Math.PI/4) {
 					minAngle = angle;
 					result = target;
@@ -272,11 +268,6 @@ public class Game extends BasicGameState {
 			shieldSpells.remove(sp);
 		}
 		shieldSpellstoRemove.clear();
-
-		for(Wizard wizard : wizardsToRemove) {
-			wizards.remove(wizard);
-		}
-		wizardsToRemove.clear();
 
 		for(ElementalOrb orb : elementalOrbstoRemove) {
 			elementalOrbs.remove(orb);

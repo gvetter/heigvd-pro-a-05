@@ -24,13 +24,14 @@ public class Server extends StateBasedGame{
 		this.addState(new MainMenu());
 		this.addState(new Game());
 		this.addState(new LogIn());
+		this.addState(new Credits());
 	}
 	
 	@Override
 	public void initStatesList(GameContainer gc) throws SlickException {
 		this.getState(MENU).init(gc, this);
 		this.getState(GAME).init(gc, this);
-		//this.getState(CREDITS).init(arg0, this);
+		this.getState(CREDITS).init(gc, this);
 		this.getState(LOG_IN).init(gc, this);
 	}
 

@@ -6,7 +6,9 @@ import org.newdawn.slick.SlickException;
 
 import common.spells.AttackSpell;
 import common.spells.ShieldSpell;
+import org.newdawn.slick.geom.Rectangle;
 
+import java.awt.*;
 import java.util.*;
 
 /**
@@ -65,19 +67,23 @@ public class Wizard {
      * @return a boolean that indicate if the adding was successful.
      */
     public boolean addOrb(ElementalOrb orb) {
-        int count = 0;
-        for(int i = 0; i < orbs.size(); i++){
-            if(!orbs.get(i).isPrepared()){
-                count++;
+        if(!isDead) {
+            int count = 0;
+            for (int i = 0; i < orbs.size(); i++) {
+                if (!orbs.get(i).isPrepared()) {
+                    count++;
+                }
+            }
+            if (count < 4) {
+                orbs.add(orb);
+                return true;
+            } else {
+                return false;
             }
         }
-        if(count < 4){
-            orbs.add(orb);
-            return true;
-        } else {
-            return false;
-        }
+        return false;
     }
+
 
     /**
      * Getter for the shields
@@ -221,11 +227,19 @@ public class Wizard {
      * @throws SlickException in case of emergency.
      */
     public void render(Graphics g) throws SlickException {
-        this.sprite.draw(x-16, y-16);
+        if(!isDead) {
+            g.setLineWidth(4);
+            g.setColor(Color.red);
+            Rectangle life = new Rectangle(x - 25, y - 40, (int)(healthPoint/100.0*48), 12);
+            g.fill(life);
+            g.setColor(Color.black);
+            g.drawRect(x - 25, y - 40, 48, 12);
+            this.sprite.draw(x - 16, y - 16);
 
-        if(!shield.isEmpty()) {
-            for(int i = 0; i < shield.size(); i++) {
-                shield.get(i).render(g);
+            if (!shield.isEmpty()) {
+                for (int i = 0; i < shield.size(); i++) {
+                    shield.get(i).render(g);
+                }
             }
         }
     }
