@@ -5,6 +5,9 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 
+/**
+ * Define a defensive spell
+ */
 public class ShieldSpell extends Spell {
 
     private ElementalOrb orb;
@@ -27,7 +30,7 @@ public class ShieldSpell extends Spell {
 
     /**
      * Helper method used to compute the angle at which the shield needs to be oriented
-     * @return a Pair of intergers that represents the starting and ending angles of the arc of the shield.
+     * @return a Pair of integers that represents the starting and ending angles of the arc of the shield.
      */
     private Pair<Integer, Integer> getArcBounds(){
         switch (orb.getCaster().getId()){
@@ -52,7 +55,6 @@ public class ShieldSpell extends Spell {
     public void render(Graphics g) throws SlickException {
         g.setColor(Color.black);
         g.setLineWidth(4);
-        //g.drawOval(orb.getCaster().getX() - 18 - radius/2 - counter, orb.getCaster().getY() - 18 - radius/2 - counter, 36 + radius + counter*2, 36 + radius + counter*2 );
         g.drawArc(orb.getCaster().getX() - 18 - radius/2 - counter,
                 orb.getCaster().getY() - 18 - radius/2 - counter,
                 36 + radius + counter*2, 36 + radius + counter*2,

@@ -1,12 +1,18 @@
 package common.spells;
 
-import org.newdawn.slick.Color;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
+/**
+ * Enum to define the element of magic
+ */
 public enum MagicType {
     EARTH,FIRE,LIGHTNING,WATER;
 
+    /**
+     * Return the sprite associated to the element
+     * @return Image, the sprite associated to the element
+     */
     public Image getSprite() {
         try {
             switch (this) {

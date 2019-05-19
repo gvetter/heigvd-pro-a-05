@@ -1,5 +1,8 @@
 package common.spells;
 
+/**
+ * Enum to define the quality of a spell
+ */
 public enum Quality {
     PERFECT, GOOD, OKAY;
     public int computePower(){
