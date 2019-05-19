@@ -13,6 +13,7 @@ public abstract class Spell {
 
     /**
      * Constructor of a spell, taking an orb
+     *
      * @param orb the magical orb used to set the values of the spell
      */
     public Spell(ElementalOrb orb) {
@@ -22,47 +23,53 @@ public abstract class Spell {
     }
 
     /**
+     * Return if the spell has finished. It should disappear in that case.
      *
-     * @return
+     * @return true if the spell has finished. false otherwise.
      */
-    public boolean isOver(){
+    public boolean isOver() {
         return over;
     }
 
     /**
      * Setter for over
-     * @param b
+     *
+     * @param b the new value for over
      */
-    public void setOver(boolean b){
+    public void setOver(boolean b) {
         over = b;
     }
 
     /**
      * Return the spell's caster
+     *
      * @return Wizard who casted the spell
      */
-    public Wizard getCaster(){
+    public Wizard getCaster() {
         return caster;
     }
 
     /**
      * Set the spell's caster
+     *
      * @param wizard Wizard who casted the spell
      */
-    public void setCaster(Wizard wizard){
+    public void setCaster(Wizard wizard) {
         caster = wizard;
     }
 
     /**
      * Method used to compute the power of the spell depending of its quality
+     *
      * @return int, the power of the spell
      */
-    public int computePower(){
+    public int computePower() {
         return quality.computePower();
     }
 
     /**
      * Getter for the spell's element
+     *
      * @return MagicType, element of the spell.
      */
     public MagicType getType() {
