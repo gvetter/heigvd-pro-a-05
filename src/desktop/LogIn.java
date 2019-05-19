@@ -7,6 +7,8 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
+import org.newdawn.slick.state.transition.FadeInTransition;
+import org.newdawn.slick.state.transition.FadeOutTransition;
 
 public class LogIn extends BasicGameState {
 
@@ -35,13 +37,14 @@ public class LogIn extends BasicGameState {
     }
 
     @Override
-    public void update(GameContainer gc, StateBasedGame arg1, int arg2) {
+    public void update(GameContainer gc, StateBasedGame arg1, int arg2) throws SlickException {
         int x = Mouse.getX();
         int y = gc.getHeight() - Mouse.getY();
 
         // Start button is pressed
         if((x > gc.getWidth() / 2 - 50 && x < gc.getWidth() / 2 + 50) && (y > 700 && y < 750)) {
             if(Mouse.isButtonDown(0)) {
+                arg1.getState(1).init(gc, arg1);
                 arg1.enterState(1);
             }
         }
