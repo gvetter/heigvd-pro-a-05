@@ -1,9 +1,13 @@
 package common.spells;
 
+/**
+ * Enum to define the quality of a spell
+ */
 public enum Quality {
     PERFECT, GOOD, OKAY;
-    public int computePower(){
-        switch (this){
+
+    public int computePower() {
+        switch (this) {
             case PERFECT:
                 return 10;
             case GOOD:
