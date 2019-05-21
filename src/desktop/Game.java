@@ -28,6 +28,12 @@ public class Game extends BasicGameState {
 	private static int id;
 	private Wizard winner = null;
 
+	/**
+	 * Method init, used to set the values correctly
+	 * @param gc
+	 * @param sbg
+	 * @throws SlickException
+	 */
 	@Override
 	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
 		container = gc;
@@ -46,6 +52,9 @@ public class Game extends BasicGameState {
 		setId();
 	}
 
+	/**
+	 * Method used to set the id's of the wizards.
+	 */
 	private void setId(){
 		int id = 0;
 		for(Wizard w : wizards){
@@ -54,6 +63,13 @@ public class Game extends BasicGameState {
 		}
 	}
 
+	/**
+	 * Method render used to render and display the game.
+	 * @param gc
+	 * @param sbg
+	 * @param g
+	 * @throws SlickException
+	 */
 	@Override
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
 		if(winner!=null){
@@ -77,6 +93,10 @@ public class Game extends BasicGameState {
 
 	}
 
+	/**
+	 * Method used to check if a wizard won.
+	 * @return
+	 */
 	public Wizard checkWinner(){
 		int winnerIndex = 0;
 		int nbAlive = 0;
@@ -92,9 +112,18 @@ public class Game extends BasicGameState {
 		return null;
 	}
 
+	/**
+	 * Method update, called each time the game is updated (each frame)
+	 * @param gc
+	 * @param sbg
+	 * @param a
+	 * @throws SlickException
+	 */
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int a) throws SlickException {
+		//We remove the objects that should not be displayed
 		remove();
+		//We set the winner
 		winner = checkWinner();
 		if(winner==null) {
 			checkUpdate();
@@ -103,6 +132,7 @@ public class Game extends BasicGameState {
 				for (Wizard wizard : wizards) {
 					if (wizard.checkCollision(as)) {
 						wizard.getHit(as);
+						//If the spell bounce, we do not remove it
 						if (!as.isBounce()) {
 							attackSpellstoRemove.add(as);
 							if (wizard.getOrbs().size() != 0) {
@@ -125,7 +155,6 @@ public class Game extends BasicGameState {
 			}
 
 			for (Wizard wizard : wizards) {
-
 				for (ElementalOrb orb : wizard.getOrbs()) {
 					orb.move();
 					if (orb.isCast()) {
@@ -151,33 +180,10 @@ public class Game extends BasicGameState {
 		return 1;
 	}
 
-	public void mouseClicked(int button, int x, int y, int clickCount) {
-		if (button == 0) {
-			castAttack(new Vector(wizards.get(0).getX(), x, wizards.get(0).getY(), y), wizards.get(0));
-		}
-
-		if (button == 1) {
-			Random r = new Random();
-			int i = r.nextInt(4);
-			castOrb(wizards.get(0), Quality.PERFECT, MagicType.values()[0]);
-		}
-	}
-
-	public void keyPressed(int key, char c){
-		if(null != wizards) {
-			if (c == 'q') {
-				Random r = new Random();
-				int i = r.nextInt(4);
-				castOrb(wizards.get(1), Quality.PERFECT, MagicType.values()[0]);
-			}
-		}
-		if(null != wizards) {
-			if (c == 'w') {
-				castShield(wizards.get(1));
-			}
-		}
-	}
-
+	/**
+	 * Helper method used to cast a shield
+	 * @param caster the caster of the shield
+	 */
 	private void castShield(Wizard caster){
 		if(caster.getOrbs().size() != 0) {
 			for (int i = 0; i < caster.getShield().size(); i++) {
@@ -194,7 +200,12 @@ public class Game extends BasicGameState {
 		}
 		orbs.clear();
 	}
-	
+
+	/**
+	 * Helper method used to throw an attack at the target
+	 * @param target the target of the spell
+	 * @param caster the caster of the spell
+	 */
 	private void throwAttack(Wizard target, Wizard caster){
 		if(target != null) {
 			LinkedList<ElementalOrb> orbs = caster.getOrbs();
@@ -210,6 +221,11 @@ public class Game extends BasicGameState {
 		}
 	}
 
+	/**
+	 * Method used to cast an attack and find the target using a vector
+	 * @param v the vector of the direction of the attack
+	 * @param caster the caster of the attack
+	 */
 	private void castAttack(Vector v, Wizard caster){
 		Wizard target = findTarget(v, caster);
 		if(target != null) {
@@ -220,6 +236,12 @@ public class Game extends BasicGameState {
 		}
 	}
 
+	/**
+	 * Helper method used to find the correct target using a direction vector.
+	 * @param v the direction vector
+	 * @param caster the caster of the attack spell.
+	 * @return the target of the spell, or null if the target has not been found.
+	 */
 	private Wizard findTarget (Vector v, Wizard caster){
 		Wizard result = null;
 		double minAngle = 10;
@@ -235,6 +257,12 @@ public class Game extends BasicGameState {
 		return result;
 	}
 
+	/**
+	 * Helper method used to cast an orb
+	 * @param caster the caster of the orb
+	 * @param qual the quality of the drawing of the spell
+	 * @param type the type of the orb
+	 */
 	private void castOrb(Wizard caster, Quality qual, MagicType type) {
 			ElementalOrb orb = new ElementalOrb(caster, qual, type);
 			if (caster.addOrb(orb)) {
@@ -243,6 +271,11 @@ public class Game extends BasicGameState {
 
 	}
 
+	/**
+	 * Method used to parse a request and do something accordingly
+	 * @param id the id of the wizard that send the request.
+	 * @param request the request sent.
+	 */
 	public void parse(int id, byte[] request){
 		String[] requestStringSplit = new String[3];
 		for(int i = 0; i < requestStringSplit.length; i++){
@@ -281,6 +314,9 @@ public class Game extends BasicGameState {
 		}
 	}
 
+	/**
+	 * Hehlper method used to check if a new request has been sent.
+	 */
 	private void checkUpdate(){
 		if(changed){
 			changed = false;
@@ -294,6 +330,9 @@ public class Game extends BasicGameState {
 		}
 	}
 
+	/**
+	 * Helper method that removes the elements that have been schedule to be removed
+	 */
 	private void remove(){
 		for(AttackSpell as : attackSpellstoRemove) {
 			attackSpells.remove(as);
