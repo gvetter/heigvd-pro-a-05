@@ -25,25 +25,14 @@ public class Wizard {
     private LinkedList<ElementalOrb> orbs = new LinkedList<>();
 
     /**
-     * Constructor by default;
-     */
-    public Wizard() {
-    	this(0, 0);
-    }
-
-    /**
      * Constructor, taking the position of a Wizard.
      * @param x the x coordinate of the wizard
      * @param y the y coordinate of the wizard
      */
-    public Wizard(int x, int y) {
+    public Wizard(int x, int y, Image sprite) {
     	this.x = x;
     	this.y = y;
-        try {
-            this.sprite = new Image("img/wizard.png");
-        } catch (SlickException e) {
-            e.printStackTrace();
-        }
+        this.sprite = sprite;
     }
 
     public boolean isDead(){
@@ -208,6 +197,9 @@ public class Wizard {
             g.setColor(Color.black);
             g.drawRect(x - 25, y - 40, 48, 12);
             this.sprite.draw(x - 16, y - 16);
+
+            g.setColor(Color.black);
+            g.drawString("P" + (id+1), x-10, y-60);
 
             if (!shield.isEmpty()) {
                 for (int i = 0; i < shield.size(); i++) {

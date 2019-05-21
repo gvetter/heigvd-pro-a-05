@@ -6,10 +6,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import common.spells.*;
-import org.newdawn.slick.Color;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.SlickException;
+import org.newdawn.slick.*;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
@@ -42,10 +39,10 @@ public class Game extends BasicGameState {
 	    attackSpells = new LinkedList<>();
 	    elementalOrbs = new LinkedList<>();
 		elementalOrbstoRemove = new LinkedList<>();
-	    wizards.add(new Wizard(135, 245));
-	    wizards.add(new Wizard(489, 245));
-	    //wizards.add(new Wizard(312, 68));
-	    //wizards.add(new Wizard(312, 422));
+	    wizards.add(new Wizard(135, 245, new Image("img/wizard_pink.png")));
+	    wizards.add(new Wizard(489, 245, new Image("img/wizard_blue.png")));
+	    wizards.add(new Wizard(312, 68, new Image("img/wizard_green.png")));
+	    wizards.add(new Wizard(312, 422, new Image("img/wizard_brown.png")));
 		setId();
 	}
 
@@ -62,7 +59,7 @@ public class Game extends BasicGameState {
 		if(winner!=null){
 			g.clear();
 			g.setColor(Color.white);
-			g.drawString("Wizard number " + winner.getId() + " won!",gc.getWidth()/2 - 100, gc.getHeight()/2 -10);
+			g.drawString("Wizard number " + (winner.getId()+1) + " won!",gc.getWidth()/2 - 100, gc.getHeight()/2 -10);
 
 		} else {
 			g.scale(2, 2);
