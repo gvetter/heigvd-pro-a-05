@@ -4,10 +4,7 @@ import heig.pro.a05.desktop.Game;
 import heig.pro.a05.desktop.LogIn;
 import heig.pro.a05.desktop.Server;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.logging.Level;
@@ -66,11 +63,14 @@ public class MultiThreadServer {
                     LOG.log(Level.INFO, "A potential client has arrived.");
 
                     BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+                    PrintWriter out = new PrintWriter(new OutputStreamWriter(clientSocket.getOutputStream()));
                     String line;
                     if((line = in.readLine()) != null) {
                         if (line.equals("READY")) {
                             LOG.log(Level.INFO, "A new client has arrived. Number of client {0} with ip " + clientSocket.getInetAddress().getHostAddress(), nbClient);
 
+                            out.println(nbClient + 1);
+                            out.flush();
                             new Thread(new ServantWorker(clientSocket, nbClient)).start();
                             nbClient++;
                             LogIn.setNbPlayers(nbClient);
