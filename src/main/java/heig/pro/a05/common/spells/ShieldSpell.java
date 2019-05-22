@@ -3,6 +3,7 @@ package heig.pro.a05.common.spells;
 import javafx.util.Pair;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
 /**
@@ -56,7 +57,8 @@ public class ShieldSpell extends Spell {
      * @throws SlickException in case of emergency.
      */
     public void render(Graphics g) throws SlickException {
-        g.setColor(Color.black);
+        g.drawImage(selectSprite(), orb.getCaster().getX() - 24, orb.getCaster().getY()-24);
+        /*g.setColor(Color.black);
         g.setLineWidth(4);
         g.drawArc(orb.getCaster().getX() - 18 - radius / 2 - counter,
                 orb.getCaster().getY() - 18 - radius / 2 - counter,
@@ -68,7 +70,7 @@ public class ShieldSpell extends Spell {
         if (!orb.getCaster().getShield().isEmpty() && frameCounter == 0) {
             orb.getCaster().getShield().clear();
             over = true;
-        }
+        }*/
     }
 
     /**
@@ -79,6 +81,21 @@ public class ShieldSpell extends Spell {
     public boolean isOver() {
         counter = -1;
         return over;
+    }
+
+    private Image selectSprite() throws SlickException {
+        switch(getType()){
+            case EARTH:
+                return new Image("img/earth_shield.png");
+            case WATER:
+                return new Image("img/water_shield.png");
+            case FIRE:
+                return new Image("img/fire_shield.png");
+            case LIGHTNING:
+                return new Image("img/lightning_shield.png");
+            default:
+                return new Image("");
+        }
     }
 
 }

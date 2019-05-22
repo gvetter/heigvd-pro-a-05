@@ -14,7 +14,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
-public class MultiThreadServer {
+public class    MultiThreadServer {
     final static Logger LOG = Logger.getLogger(MultiThreadServer.class.getName());
 
     int port;
