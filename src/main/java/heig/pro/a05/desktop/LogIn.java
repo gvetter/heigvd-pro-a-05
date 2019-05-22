@@ -51,6 +51,10 @@ public class LogIn extends BasicGameState {
         start.draw(gameContainer.getWidth() / 2 - 50, 685);
         graphics.drawString("Players connected : " + nbPlayers + "/4",
                 gameContainer.getWidth() / 2 - 100, 740);
+        if (nbPlayers < 2) {
+            graphics.drawString("Not enough players : 2min ",
+                    gameContainer.getWidth() / 2 - 100, 800);
+        }
     }
 
     /**
@@ -72,7 +76,10 @@ public class LogIn extends BasicGameState {
                 && (y > 700 && y < 750)) {
             if(Mouse.isButtonDown(0)) {
                 stateBasedGame.getState(1).init(gameContainer, stateBasedGame);
-                stateBasedGame.enterState(1);
+                if (nbPlayers > 1) {
+                    ((Game) stateBasedGame.getState(1)).addWizards(nbPlayers);
+                    stateBasedGame.enterState(1);
+                }
             }
         }
     }

@@ -45,13 +45,20 @@ public class Game extends BasicGameState {
 	    attackSpells = new LinkedList<>();
 	    elementalOrbs = new LinkedList<>();
 		elementalOrbstoRemove = new LinkedList<>();
-	    wizards.add(new Wizard(135, 245, new Image("img/wizard_pink.png")));
-	    wizards.add(new Wizard(489, 245, new Image("img/wizard_blue.png")));
-	    wizards.add(new Wizard(312, 68, new Image("img/wizard_green.png")));
-	    wizards.add(new Wizard(312, 422, new Image("img/wizard_brown.png")));
-		setId();
+
 	}
 
+	public void addWizards(int nbWizards) throws SlickException {
+		wizards.add(new Wizard(135, 245, new Image("img/wizard_pink.png")));
+		wizards.add(new Wizard(489, 245, new Image("img/wizard_blue.png")));
+		if(nbWizards > 2) {
+			wizards.add(new Wizard(312, 68, new Image("img/wizard_green.png")));
+		}
+		if (nbWizards > 3) {
+			wizards.add(new Wizard(312, 422, new Image("img/wizard_brown.png")));
+		}
+		setId();
+	}
 	/**
 	 * Method used to set the id's of the wizards.
 	 */
