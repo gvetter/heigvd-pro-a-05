@@ -1,8 +1,8 @@
 package heig.pro.a05.common.spells;
 
 import javafx.util.Pair;
-import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
 /**
@@ -13,8 +13,8 @@ public class ShieldSpell extends Spell {
     private ElementalOrb orb;
     private int frameCounter = computePower() * 25;
     private boolean over = false;
-    private static int counter = -1;
-    private int radius;
+    private int id;
+    private static int counter = 0;
 
     /**
      * Constructor taking an orb as parameter.
@@ -23,8 +23,8 @@ public class ShieldSpell extends Spell {
      */
     public ShieldSpell(ElementalOrb orb) {
         super(orb);
-        counter += 4;
-        radius = counter * 4;
+        counter += 1;
+        id = counter;
         this.orb = orb;
         orb.getCaster().addShield(this);
     }
@@ -56,13 +56,9 @@ public class ShieldSpell extends Spell {
      * @throws SlickException in case of emergency.
      */
     public void render(Graphics g) throws SlickException {
-        g.setColor(Color.black);
-        g.setLineWidth(4);
-        g.drawArc(orb.getCaster().getX() - 18 - radius / 2 - counter,
-                orb.getCaster().getY() - 18 - radius / 2 - counter,
-                36 + radius + counter * 2, 36 + radius + counter * 2,
-                getArcBounds().getKey(),
-                getArcBounds().getValue());
+        Image s = selectSprite();
+        float scale = 0.7f + 0.3f * id;
+        s.draw((int)(orb.getCaster().getX() -24*scale), (int)(orb.getCaster().getY() -24 * scale), scale);
 
         frameCounter--;
         if (!orb.getCaster().getShield().isEmpty() && frameCounter == 0) {
@@ -79,6 +75,21 @@ public class ShieldSpell extends Spell {
     public boolean isOver() {
         counter = -1;
         return over;
+    }
+
+    private Image selectSprite() throws SlickException {
+        switch(getType()){
+            case EARTH:
+                return new Image("img/earth_shield.png");
+            case WATER:
+                return new Image("img/water_shield.png");
+            case FIRE:
+                return new Image("img/fire_shield.png");
+            case LIGHTNING:
+                return new Image("img/lightning_shield.png");
+            default:
+                return new Image("");
+        }
     }
 
 }
