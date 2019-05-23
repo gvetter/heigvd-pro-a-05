@@ -76,7 +76,7 @@ public class LogIn extends BasicGameState {
                 && (y > 700 && y < 750)) {
             if(Mouse.isButtonDown(0)) {
                 stateBasedGame.getState(1).init(gameContainer, stateBasedGame);
-                if (nbPlayers > 0) {
+                if (nbPlayers > 1) {
                     ((Game) stateBasedGame.getState(1)).addWizards(nbPlayers);
                     stateBasedGame.enterState(1);
                 }

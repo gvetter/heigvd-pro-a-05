@@ -30,26 +30,6 @@ public class ShieldSpell extends Spell {
     }
 
     /**
-     * Helper method used to compute the angle at which the shield needs to be oriented
-     *
-     * @return a Pair of integers that represents the starting and ending angles of the arc of the shield.
-     */
-    private Pair<Integer, Integer> getArcBounds() {
-        switch (orb.getCaster().getId()) {
-            case 0:
-                return new Pair<>(270, 90);
-            case 1:
-                return new Pair<>(90, 270);
-            case 2:
-                return new Pair<>(0, 180);
-            case 3:
-                return new Pair<>(180, 0);
-            default:
-                return new Pair<>(0, 0);
-        }
-    }
-
-    /**
      * Method used to render a shield
      *
      * @param g graphics
